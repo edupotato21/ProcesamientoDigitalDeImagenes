@@ -1,0 +1,32 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 1200px;
+    max-width: 1200px;
+}
+
+.btn_container {
+    display: block;
+    margin-top: 50px;
+}
+
+#canvas {
+    background-color: #ffffff;
+}

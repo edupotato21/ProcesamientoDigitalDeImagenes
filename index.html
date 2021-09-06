@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulación de imagenes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <span>Pexels</span>
+    </header>
+    <div class="upload_image">
+        <input type="file" name="file" id="file" accept=".jpg, .png, .jpeg">
+    </div>
+    <div class="container">
+        <canvas id="canvas1" width="800" height="600"></canvas>
+    </div>
+    <div class="btn_container">
+        <button class="btn" id="black">B/N</button>
+        <button class="btn" id="invert">Negativo</button>
+        <button class="btn" id="aclarar">Aclarar</button>
+        <button class="btn" id="restaurar">Restaurar</button>
+        <button class="btn btn_d" id="btn_descarga">Descargar</button>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
