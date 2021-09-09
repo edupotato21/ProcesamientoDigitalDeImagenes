@@ -9,7 +9,6 @@ const file = document.getElementById('file').onchange = function (e) {
     }
 }
 
-// image1.crossOrigin = 'anonymous';
 image1.addEventListener('load', function () {
     canvas.width = image1.width;
     canvas.height = image1.height;
@@ -22,19 +21,52 @@ image1.addEventListener('load', function () {
         histograma[i] = 0;
     }
     /* Filters */
+    for (let i = 0; i < imgData.length; i += 4) {
+        const total = imgData[i] + imgData[i + 1] + imgData[i + 2];
+        const averageColorValue = total / 3;
+        imgData[i] = Math.round(averageColorValue);
+        imgData[i + 1] = Math.round(averageColorValue);
+        imgData[i + 2] = Math.round(averageColorValue);
+        histograma[Math.round(averageColorValue)] += 1;
+    }
+    scannedImage.data = imgData;
+    ctx.putImageData(scannedImage, 0, 0);
+    console.log(histograma);
     const blackAndWhite = function () {
-        for (let i = 0; i < imgData.length; i += 4) {
-            const total = imgData[i] + imgData[i + 1] + imgData[i + 2];
-            const averageColorValue = total / 3;
-            imgData[i] = Math.round(averageColorValue);
-            imgData[i + 1] = Math.round(averageColorValue);
-            imgData[i + 2] = Math.round(averageColorValue);
-            histograma[Math.round(averageColorValue)] += 1;
+        /* GOOGLE CHARTS */
+        let hisData = [];
+        for (let i = 0; i < histograma.length; i++) {
+            hisData.push([i, histograma[i]]);
         }
-        scannedImage.data = imgData;
-        ctx.putImageData(scannedImage, 0, 0);
-        console.log(histograma);
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.setOnLoadCallback(drawStuff);
+
+        function drawStuff() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'color');
+            data.addColumn('number', 'total');
+            data.addRows(hisData);
+            var options = {
+                width: 800,
+                legend: { position: 'none' },
+                chart: {
+                    title: 'Histograma',
+                    subtitle: 'En escala de grises'
+                },
+                axes: {
+                    x: {
+                        0: { side: 'bottom', label: 'White to move' } // Top x-axis.
+                    }
+                },
+                bar: { groupWidth: "100%" }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('image_histogram'));
+            // Convert the Classic options to Material options.
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        };
     };
+
     const invert = function () {
         for (let i = 0; i < imgData.length; i += 4) {
             imgData[i] = 255 - imgData[i];
