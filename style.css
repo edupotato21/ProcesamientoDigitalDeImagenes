@@ -1,7 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+nav {
+    font-family: 'Electrolize', sans-serif;
+    font-size: 40px;
+    width: 100%;
 }
 
 body {

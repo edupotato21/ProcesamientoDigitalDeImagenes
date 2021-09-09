@@ -6,27 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manipulación de imagenes</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header class="header">
-        <span>Pexels</span>
-    </header>
-    <div class="upload_image">
-        <input type="file" name="file" id="file" accept=".jpg, .png, .jpeg">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./icono.png" alt="" width="35" height="35" class="d-inline-block align-text-top">
+                ixels
+            </a>
+        </div>
+    </nav>
+    <div class="mb-3 mt-3">
+        <input class="form-control" type="file" name="file" id="file" accept=".jpg, .png, .jpeg">
     </div>
     <div class="container">
         <canvas id="canvas1" width="800" height="600"></canvas>
     </div>
     <div class="btn_container">
-        <button class="btn" id="black">B/N</button>
-        <button class="btn" id="invert">Negativo</button>
-        <button class="btn" id="aclarar">Aclarar</button>
-        <button class="btn" id="restaurar">Restaurar</button>
-        <button class="btn btn_d" id="btn_descarga">Descargar</button>
+        <button class="btn btn-dark" id="black">B/N</button>
+        <button class="btn btn-secondary" id="invert">Negativo</button>
+        <button class="btn btn-light" id="aclarar">Aclarar</button>
+        <button class="btn btn-danger" id="restaurar">Restaurar</button>
+        <button class="btn btn-success" id="btn_descarga">Descargar</button>
     </div>
     <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

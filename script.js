@@ -17,7 +17,7 @@ image1.addEventListener('load', function () {
     const scannedImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
     console.log(scannedImage);
     let imgData = scannedImage.data;
-    let histograma = new Array(255);
+    let histograma = new Array(256);
     for (let i = 0; i < histograma.length; i++) {
         histograma[i] = 0;
     }
