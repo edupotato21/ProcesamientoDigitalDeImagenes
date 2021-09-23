@@ -67,11 +67,39 @@ image1.addEventListener('load', function () {
         };
     };
 
-    const invert = function () {
+    const expansion = function () {
+        let x1 = null, x2 = 0;
+        let y1 = 1, y2 = 255;
+        let tem = new Array(256);
+        for (let i = 0; i < tem.length; i++) {
+            tem[i] = 0;
+        }
+        let gris = new Array(256);
+        for (let i = 0; i < tem.length; i++) {
+            gris[i] = 0;
+        }
+        for (let i = 0; i < histograma.length; i++) {
+            if (x1 == null && histograma[i] >= 1) {
+                x1 = i;
+            }
+            if (histograma[i] != 0) {
+                x2 = i;
+            }
+        }
+        let pendiente = (y2 - y1) / (x2 - x1);
+        let b = y1 - (pendiente * x1);
+        for (let i = 0; i < histograma.length; i++) {
+            if (histograma[i] != 0) {
+                let tx = Math.round((pendiente * i) + b);
+                tem[tx] += histograma[i];
+                gris[i] = tx;
+            }
+        }
         for (let i = 0; i < imgData.length; i += 4) {
-            imgData[i] = 255 - imgData[i];
-            imgData[i + 1] = 255 - imgData[i + 1];
-            imgData[i + 2] = 255 - imgData[i + 2];
+            let nuevoGris = gris[imgData[i]];
+            imgData[i] = nuevoGris;
+            imgData[i + 1] = nuevoGris;
+            imgData[i + 2] = nuevoGris;
         }
         scannedImage.data = imgData;
         ctx.putImageData(scannedImage, 0, 0);
@@ -103,8 +131,8 @@ image1.addEventListener('load', function () {
     /*Eventos de los botones*/
     const filter1 = document.getElementById('black');
     filter1.addEventListener('click', blackAndWhite);
-    const filter2 = document.getElementById('invert');
-    filter2.addEventListener('click', invert);
+    const filter2 = document.getElementById('expansion');
+    filter2.addEventListener('click', expansion);
     const filter3 = document.getElementById('aclarar');
     filter3.addEventListener('click', aclarar);
     /*RESTAURAR IMAGEN*/
@@ -114,4 +142,3 @@ image1.addEventListener('load', function () {
     const download = document.getElementById('btn_descarga');
     download.addEventListener('click', guardarImagen);
 })
-
