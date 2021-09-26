@@ -12,6 +12,7 @@ const file = document.getElementById('file').onchange = function (e) {
 image1.addEventListener('load', function () {
     canvas.width = image1.width;
     canvas.height = image1.height;
+    canvas.style.width = "500px";
     ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
     const scannedImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
     console.log(scannedImage);
@@ -55,7 +56,7 @@ image1.addEventListener('load', function () {
                 },
                 axes: {
                     x: {
-                        0: { side: 'bottom', label: 'White to move' } // Top x-axis.
+                        0: { side: 'bottom', label: 'Tonos de gris' } // Top x-axis.
                     }
                 },
                 bar: { groupWidth: "100%" }
@@ -68,16 +69,18 @@ image1.addEventListener('load', function () {
     };
 
     const expansion = function () {
+        /* INICIALIAZACIÓN DE VARIABLES */
         let x1 = null, x2 = 0;
         let y1 = 1, y2 = 255;
         let tem = new Array(256);
+        let gris = new Array(256);
         for (let i = 0; i < tem.length; i++) {
             tem[i] = 0;
         }
-        let gris = new Array(256);
-        for (let i = 0; i < tem.length; i++) {
+        for (let i = 0; i < gris.length; i++) {
             gris[i] = 0;
         }
+        /* ALGORITMO DE EXPANSIÓN */
         for (let i = 0; i < histograma.length; i++) {
             if (x1 == null && histograma[i] >= 1) {
                 x1 = i;
@@ -103,19 +106,48 @@ image1.addEventListener('load', function () {
         }
         scannedImage.data = imgData;
         ctx.putImageData(scannedImage, 0, 0);
+        histograma = tem;
     };
-    const aclarar = function () {
+    const ecualizacion = function () {
+        let pixeles = canvas.width * canvas.height;
+        let nk = new Array(256);
+        let prrk = new Array(256);
+        let sk = new Array(256);
+        let tem = new Array(256);
+        let suma = 0;
+        for (let i = 0; i < nk.length; i++) {
+            nk[i] = 0;
+            tem[i] = 0;
+        }
         for (let i = 0; i < imgData.length; i += 4) {
-            imgData[i] += 100;
-            imgData[i + 1] += 100;
-            imgData[i + 2] += 100;
+            nk[imgData[i]] += 1;
+        }
+        for (let i = 0; i < prrk.length; i++) {
+            prrk[i] = nk[i] / pixeles;
+        }
+        for (let i = 0; i < sk.length; i++) {
+            suma += prrk[i];
+            sk[i] = Math.round((256 - 1) * suma);
+            tem[sk[i]] += prrk[i];
+        }
+        for (let i = 0; i < imgData.length; i += 4) {
+            let nuevoTono = sk[imgData[i]];
+            imgData[i] = nuevoTono;
+            imgData[i + 1] = nuevoTono;
+            imgData[i + 2] = nuevoTono;
+        }
+        for (let i = 0; i < tem.length; i++) {
+            tem[i] = tem[i] * pixeles;
         }
         scannedImage.data = imgData;
         ctx.putImageData(scannedImage, 0, 0);
+        histograma = tem;
     };
-    const restaurarImagen = function () {
 
+    const restaurarImagen = function () {
+        console.log("asdsad");
     }
+
     const guardarImagen = function () {
         var link = window.document.createElement('a'),
             url = canvas.toDataURL('image/png'),
@@ -128,13 +160,14 @@ image1.addEventListener('load', function () {
         link.click();
         window.document.body.removeChild(link);
     }
+
     /*Eventos de los botones*/
     const filter1 = document.getElementById('black');
     filter1.addEventListener('click', blackAndWhite);
     const filter2 = document.getElementById('expansion');
     filter2.addEventListener('click', expansion);
-    const filter3 = document.getElementById('aclarar');
-    filter3.addEventListener('click', aclarar);
+    const filter3 = document.getElementById('ecualizacion');
+    filter3.addEventListener('click', ecualizacion);
     /*RESTAURAR IMAGEN*/
     const restaurar = document.getElementById('restaurar');
     restaurar.addEventListener('click', restaurarImagen);
