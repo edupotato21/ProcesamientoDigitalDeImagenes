@@ -1,6 +1,7 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 const image1 = new Image();
+let imageName = '';
 const file = document.getElementById('file').onchange = function (e) {
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
@@ -10,9 +11,11 @@ const file = document.getElementById('file').onchange = function (e) {
 }
 
 image1.addEventListener('load', function () {
+    document.querySelector('.canvas').style.display = 'flex';
+    document.querySelector('.canvas-image').style.display = 'none';
     canvas.width = image1.width;
     canvas.height = image1.height;
-    canvas.style.width = "500px";
+    canvas.style.width = "600px";
     ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
     const scannedImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
     console.log(scannedImage);
@@ -33,7 +36,7 @@ image1.addEventListener('load', function () {
     scannedImage.data = imgData;
     ctx.putImageData(scannedImage, 0, 0);
     console.log(histograma);
-    const blackAndWhite = function () {
+    const showHistograma = function () {
         /* GOOGLE CHARTS */
         let hisData = [];
         for (let i = 0; i < histograma.length; i++) {
@@ -48,7 +51,8 @@ image1.addEventListener('load', function () {
             data.addColumn('number', 'total');
             data.addRows(hisData);
             var options = {
-                width: 800,
+                width: 700,
+                height: 400,
                 legend: { position: 'none' },
                 chart: {
                     title: 'Histograma',
@@ -66,6 +70,7 @@ image1.addEventListener('load', function () {
             // Convert the Classic options to Material options.
             chart.draw(data, google.charts.Bar.convertOptions(options));
         };
+        document.querySelector('.histograma').style.display = 'block';
     };
 
     const expansion = function () {
@@ -151,7 +156,8 @@ image1.addEventListener('load', function () {
     const guardarImagen = function () {
         var link = window.document.createElement('a'),
             url = canvas.toDataURL('image/png'),
-            filename = 'screenshot.jpg';
+            filename = 'image.jpg';
+        console.log(imageName);
 
         link.setAttribute('href', url);
         link.setAttribute('download', filename);
@@ -162,8 +168,8 @@ image1.addEventListener('load', function () {
     }
 
     /*Eventos de los botones*/
-    const filter1 = document.getElementById('black');
-    filter1.addEventListener('click', blackAndWhite);
+    const filter1 = document.getElementById('histograma');
+    filter1.addEventListener('click', showHistograma);
     const filter2 = document.getElementById('expansion');
     filter2.addEventListener('click', expansion);
     const filter3 = document.getElementById('ecualizacion');

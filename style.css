@@ -22,19 +22,59 @@ body {
     background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
 }
 
+.tittle {
+    color: #f1f1f1;
+    margin-top: 8px;
+    text-align: center;
+}
+
 .container {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.canvas {
+    display: none;
     justify-content: center;
     text-align: center;
     width: 1200px;
     max-width: 1200px;
 }
 
-.btn_container {
-    display: block;
-    margin-top: 50px;
+.canvas-image {
+    background: #f1f1f1;
+    width: 700px;
+    height: 600px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
 }
 
-#canvas {
-    background-color: #ffffff;
+.svg-image {
+    width: 350px;
+}
+
+.histograma {
+    display: none;
+    padding: 10px 5px;
+    margin: 15px 10px;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+.btn_container {
+    display: block;
+    margin-top: 15px;
+}
+
+.footer {
+    background: #0f0c29;
+    color: #f1f1f1;
+    width: 100%;
+    height: 130px;
+    text-align: center;
+    padding-top: 15px;
 }
