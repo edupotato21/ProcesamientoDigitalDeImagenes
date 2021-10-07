@@ -67,7 +67,6 @@ image1.addEventListener('load', function () {
             };
 
             var chart = new google.charts.Bar(document.getElementById('image_histogram'));
-            // Convert the Classic options to Material options.
             chart.draw(data, google.charts.Bar.convertOptions(options));
         };
         document.querySelector('.histograma').style.display = 'block';
@@ -149,15 +148,15 @@ image1.addEventListener('load', function () {
         histograma = tem;
     };
 
-    const restaurarImagen = function () {
-        console.log("asdsad");
-    }
-
-    const guardarImagen = function () {
-        var link = window.document.createElement('a'),
-            url = canvas.toDataURL('image/png'),
-            filename = 'image.jpg';
-        console.log(imageName);
+    const guardarImagen = function (e) {
+        e.preventDefault();
+        let nombreImg = document.querySelector('#txtNombreArchivo').value;
+        let formatoImg = document.querySelector('#select-formato').value;
+        console.log(nombreImg);
+        console.log(formatoImg);
+        var link = window.document.createElement('a');
+        var url = canvas.toDataURL(`image/jpg`);
+        var filename = `${nombreImg}.${formatoImg}`;
 
         link.setAttribute('href', url);
         link.setAttribute('download', filename);
@@ -174,10 +173,37 @@ image1.addEventListener('load', function () {
     filter2.addEventListener('click', expansion);
     const filter3 = document.getElementById('ecualizacion');
     filter3.addEventListener('click', ecualizacion);
-    /*RESTAURAR IMAGEN*/
-    const restaurar = document.getElementById('restaurar');
-    restaurar.addEventListener('click', restaurarImagen);
     /* DESCARGAR IMAGEN */
     const download = document.getElementById('btn_descarga');
     download.addEventListener('click', guardarImagen);
-})
+    /* MODAL */
+    let cerrar = document.querySelector('.close');
+    let abrir = document.querySelector('#cta');
+    let modal = document.querySelector('.modal');
+    let modalC = document.querySelector('.modal-container');
+
+    abrir.addEventListener('click', function (e) {
+        e.preventDefault();
+        modalC.style.opacity = '1';
+        modalC.style.visibility = 'visible';
+        modal.classList.toggle('modal-close');
+    });
+
+    cerrar.addEventListener('click', function () {
+        modal.classList.toggle('modal-close');
+        setTimeout(function () {
+            modalC.style.opacity = '0';
+            modalC.style.visibility = 'hidden';
+        }, 600);
+    });
+
+    window.addEventListener('click', function (e) {
+        if (e.target == modalC) {
+            modal.classList.toggle('modal-close');
+            setTimeout(function () {
+                modalC.style.opacity = '0';
+                modalC.style.visibility = 'hidden';
+            }, 600);
+        }
+    });
+});
