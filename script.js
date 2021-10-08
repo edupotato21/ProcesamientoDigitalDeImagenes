@@ -186,11 +186,13 @@ image1.addEventListener('load', function () {
         e.preventDefault();
         modalC.style.opacity = '1';
         modalC.style.visibility = 'visible';
-        modal.classList.toggle('modal-close');
+        // modal.classList.toggle('modal-close');
+        modal.classList.remove('modal-close');
     });
 
     cerrar.addEventListener('click', function () {
-        modal.classList.toggle('modal-close');
+        // modal.classList.toggle('modal-close');
+        modal.classList.add('modal-close');
         setTimeout(function () {
             modalC.style.opacity = '0';
             modalC.style.visibility = 'hidden';
@@ -199,7 +201,8 @@ image1.addEventListener('load', function () {
 
     window.addEventListener('click', function (e) {
         if (e.target == modalC) {
-            modal.classList.toggle('modal-close');
+            // modal.classList.toggle('modal-close');
+            modal.classList.add('modal-close');
             setTimeout(function () {
                 modalC.style.opacity = '0';
                 modalC.style.visibility = 'hidden';
